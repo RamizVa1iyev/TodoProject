@@ -1,0 +1,51 @@
+﻿@using System.Collections.Specialized
+@model TodoListViewModel
+<div class="card row">
+    <div class="card-header">Todo List</div>
+    <div class="card-body">
+        <form asp-controller="Todo" asp-action="AddTodo" id="todo-form" name="form">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input asp-for="Todo.Title" class="form-control"  placeholder="Enter a todo">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-danger">Add Todo</button>
+        </form>
+        <hr>
+    </div>
+    @if (TempData["message"] != null)
+    {
+        <h5 class="alert alert-@TempData["className"]">@TempData["message"]</h5>
+    }
+    <div class="card-body">
+        <hr>
+        <h5 class="card-title" id="tasks-title">Todos</h5>
+        <form asp-controller="Todo" asp-action="List" class="form-row">
+            <div class="form-group col-md-6">
+                <input asp-for="Key" class="form-control"  placeholder="Search Todo">
+            </div>
+            <button type="submit" style="height: 2.4rem;" class="btn btn-primary">Search Todo</button>
+        </form>
+        <hr>
+        @if (Model.Todos.Count == 0)
+        {
+            <h2 class="badge badge-danger">There is no todo</h2>
+        }
+        else
+        {
+            <ul class="list-group">
+                @foreach (var todo in Model.Todos)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        @todo.Title
+                        <a asp-controller="Todo" asp-action="DeleteTodo" asp-route-id="@todo.Id" class="delete-item">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        <hr>
+        <a onclick="return confirm('are you sure you want to clear todos?')" asp-controller="Todo" asp-action="Clear" id="clear-todos" class="btn btn-dark">Clear Todos</a>
+    </div>
+</div>
