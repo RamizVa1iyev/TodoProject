@@ -31,11 +31,7 @@ namespace TodoProject.Controllers
         {
             todo.Id = _todoHelper.Length+1;
             todo.AddedTime=DateTime.Now;
-            if (_todoHelper.AddTodoToSession(todo))
-            {
-                TempData.Add("message", "Todo Added!");
-                TempData.Add("className", "success");
-            }
+            _todoHelper.AddTodoToSession(todo);
             return RedirectToAction("List");
         }
 

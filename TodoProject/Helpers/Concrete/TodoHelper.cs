@@ -41,7 +41,7 @@ namespace TodoProject.Helpers.Concrete
             }
         }
 
-        public bool AddTodoToSession(Todo todo)
+        public void AddTodoToSession(Todo todo)
         {
             var todos = _todoSessionHelper.GetTodoList(SessionKey);
             var httpContext = _httpContextAccessor.HttpContext;
@@ -50,19 +50,18 @@ namespace TodoProject.Helpers.Concrete
             {
                 tempData.Add("message","Please write a todo");
                 tempData.Add("className", "danger");
-                return false;
             }
             else if (todos.Any(t => string.Equals(t.Title.Replace(" ",""), todo.Title.Replace(" ", ""), StringComparison.CurrentCultureIgnoreCase)))
             {
                 tempData.Add("message","Please write different todo");
                 tempData.Add("className", "danger");
-                return false;
             }
             else
             {
                 todos.Add(todo);
                 _todoSessionHelper.SetTodoList(SessionKey, todos);
-                return true;
+                tempData.Add("message", "Todo Added!");
+                tempData.Add("className", "success");
             }
         }
 

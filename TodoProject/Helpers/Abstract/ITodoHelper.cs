@@ -12,7 +12,7 @@ namespace TodoProject.Helpers.Abstract
         string SessionKey { get; }
         List<Todo> GetTodos();
         List<Todo> GetTodosByTitle(string key);
-        bool AddTodoToSession(Todo todo);
+        void AddTodoToSession(Todo todo);
         void DeleteTodoToSession(int id);
         void ClearTodos();
     }
